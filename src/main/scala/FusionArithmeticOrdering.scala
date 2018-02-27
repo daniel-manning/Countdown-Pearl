@@ -25,19 +25,22 @@ object FusionArithmeticOrdering {
     case Nil => List()
     case List(n) => if(n>0) List((Val(n), n)) else List()
     case lns => for {
-    /*e ← exprs(ns)
-    n ← eval(e)*/
       (ls, rs) <- notEmptySplit(lns)
       lx <- results(ls)
       ry <- results(rs)
       res <- combineFusion(lx, ry)
-    } yield res //(e, n)
+    } yield res
   }
 
   def solutions(ns:List[Int], n:Int):List[Expr] = for {
     nsDash <- subbags(ns)
     (e, m) <- results(nsDash)
-    if(m == n)
+    if m == n
   } yield e
+
+  def possibleTotals(ns:List[Int]):List[Int] = (for {
+    nsDash <- subbags(ns)
+    (e, m) <- results(nsDash)
+  } yield m).distinct.sorted
 
 }

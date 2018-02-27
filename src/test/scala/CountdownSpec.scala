@@ -53,6 +53,12 @@ class CountdownSpec extends FlatSpec with Matchers {
 
   "An integer list" should "find a unique FusionArithmeticOrdering solution to a solvable case" in {
     val solutions = FusionArithmeticOrdering.solutions(List(3,4), 7)
-    assert(solutions.size == 1)
+    assert(solutions.lengthCompare(1) == 0)
+  }
+
+  "An integer list" should "give every possible total" in {
+    val solutions = FusionArithmeticOrdering.possibleTotals(List(1,2,3,4))
+    assert(solutions.lengthCompare(31) == 0)
+    assert(solutions == List(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,32,36))
   }
 }

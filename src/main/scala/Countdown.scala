@@ -74,19 +74,32 @@ object Countdown {
     case Div => "/"
   }
 
-  def main(args:Array[String]) = {
-    val inputNums = args.map(_.filter(c => c.toString.matches("[0-9]+")).toInt).sortBy(identity).reverse
-    val targetNumber = inputNums.head
-    val chosenNumbers = inputNums.tail.toList
-    println(s"Chosen: ${chosenNumbers} for a Target of: ${targetNumber}")
-    //profile run
-    val t0 = System.nanoTime()
-    val sols = FusionArithmeticOrdering.solutions(chosenNumbers, targetNumber)
-    val t1 = System.nanoTime()
-    println(s"Elapsed time: ${(t1 - t0)/1000000000}s")
-    println(s"${sols.size} solutions")
-    sols.foreach(expr => println(show(expr)))
-
+  def main(args:Array[String]): Unit = {
+    if(args.head.contains("[")) {
+      //no target is selected
+      val chosenNumbers = args.map(_.filter(c => c.toString.matches("[0-9]+")).toInt).sortBy(identity).reverse.toList
+      println(s"Chosen: $chosenNumbers")
+      //profile run
+      val t0 = System.nanoTime()
+      val targets = FusionArithmeticOrdering.possibleTotals(chosenNumbers).filter(_ < 1000)
+      val t1 = System.nanoTime()
+      println(s"Elapsed time: ${(t1 - t0) / 1000000000}s")
+      //display solutions
+      println(s"${targets.length} possible Targets: $targets")
+    }else{
+      //target is selected
+      val targetNumber = args.head.toInt
+      val chosenNumbers = args.tail.map(_.filter(c => c.toString.matches("[0-9]+")).toInt).sortBy(identity).reverse.toList
+      println(s"Chosen: $chosenNumbers for a Target of: $targetNumber")
+      //profile run
+      val t0 = System.nanoTime()
+      val sols = FusionArithmeticOrdering.solutions(chosenNumbers, targetNumber)
+      val t1 = System.nanoTime()
+      println(s"Elapsed time: ${(t1 - t0) / 1000000000}s")
+      //display solutions
+      println(s"${sols.size} solutions")
+      sols.foreach(expr => println(show(expr)))
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 object ListUtils{
 
-  def subSequences[A](xs:List[A]):List[List[A]] = (0 to xs.length).toIterator.flatMap(i => xs.combinations(i)).toList
+  def subSequences[A](xs:List[A]):List[List[A]] = (0 to xs.length).iterator.flatMap(i => xs.combinations(i)).toList
 
   def subbags[A](xs:List[A]):List[List[A]] = for {
     ys <- subSequences(xs)

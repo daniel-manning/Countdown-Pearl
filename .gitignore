@@ -1,6 +1,7 @@
 logs
 project/project
 project/target
+project/metals.sbt
 target
 lib_managed
 tmp
@@ -16,3 +17,7 @@ dist
 /RUNNING_PID
 /.settings
 *.iws
+.vscode
+.bloop
+.metals
+.bsp

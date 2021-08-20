@@ -1,8 +1,8 @@
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest._
+import org.scalatest.flatspec.AnyFlatSpec
+import matchers.should._
 
-import scala.collection.mutable
-
-class CountdownSpec extends FlatSpec with Matchers {
+class CountdownSpec extends AnyFlatSpec with Matchers {
 
   "An integer list" should "split correctly" in {
     ListUtils.split(List(1,2)) should be (List((List(), List(1, 2)), (List(1), List(2)), (List(1, 2), List())))

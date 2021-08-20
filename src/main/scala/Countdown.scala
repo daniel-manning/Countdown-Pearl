@@ -1,4 +1,3 @@
-import Countdown.exprs
 import ListUtils._
 
 sealed trait Op
@@ -30,7 +29,7 @@ object Countdown {
 
   def values(expr:Expr):List[Int] = expr match {
     case Val(n) => List(n)
-    case App(op, le, re) => values(le) ++ values(re)
+    case App(_, le, re) => values(le) ++ values(re)
   }
 
   def eval(expr:Expr):List[Int] = expr match {
@@ -77,25 +76,42 @@ object Countdown {
   def main(args:Array[String]): Unit = {
     if(args.head.contains("[")) {
       //no target is selected
-      val chosenNumbers = args.map(_.filter(c => c.toString.matches("[0-9]+")).toInt).sortBy(identity).reverse.toList
-      println(s"Chosen: $chosenNumbers")
+      val chosenNumbers: List[Int] =
+        args
+        .map(_.filter(_.toString.matches("[0-9]+")).toInt)
+        .sortBy(identity)
+        .reverse
+        .toList
+      
+      println(s"Your ${chosenNumbers.size} numbers are: $chosenNumbers")
+      
       //profile run
       val t0 = System.nanoTime()
       val targets = FusionArithmeticOrdering.possibleTotals(chosenNumbers).filter(_ < 1000)
       val t1 = System.nanoTime()
       println(s"Elapsed time: ${(t1 - t0) / 1000000000}s")
+
       //display solutions
       println(s"${targets.length} possible Targets: $targets")
     }else{
       //target is selected
-      val targetNumber = args.head.toInt
-      val chosenNumbers = args.tail.map(_.filter(c => c.toString.matches("[0-9]+")).toInt).sortBy(identity).reverse.toList
-      println(s"Chosen: $chosenNumbers for a Target of: $targetNumber")
+      val targetNumber: Int = args.head.toInt
+      val chosenNumbers: List[Int] =
+        args
+        .tail
+        .map(_.filter(_.toString.matches("[0-9]+")).toInt)
+        .sortBy(identity)
+        .reverse
+        .toList
+
+      println(s"Your ${chosenNumbers.size} numbers are: $chosenNumbers for a target of: $targetNumber")
+
       //profile run
       val t0 = System.nanoTime()
       val sols = FusionArithmeticOrdering.solutions(chosenNumbers, targetNumber)
       val t1 = System.nanoTime()
       println(s"Elapsed time: ${(t1 - t0) / 1000000000}s")
+      
       //display solutions
       println(s"${sols.size} solutions")
       sols.foreach(expr => println(show(expr)))

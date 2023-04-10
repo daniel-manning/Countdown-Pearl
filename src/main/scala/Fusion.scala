@@ -1,8 +1,8 @@
-import Countdown._
-import ListUtils._
+import Countdown.*
+import ListUtils.*
+import Expr.*
 
-
-object Fusion {
+object Fusion:
 
   type Result = (Expr, Int)
 
@@ -33,5 +33,3 @@ object Fusion {
     (e, m) <- results(nsDash)
     if(m == n)
   } yield e
-
-}

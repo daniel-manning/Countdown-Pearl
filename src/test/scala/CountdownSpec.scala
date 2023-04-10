@@ -1,6 +1,8 @@
-import org.scalatest._
+import org.scalatest.*
 import org.scalatest.flatspec.AnyFlatSpec
-import matchers.should._
+import matchers.should.*
+import Expr.*
+import Op.*
 
 class CountdownSpec extends AnyFlatSpec with Matchers {
 

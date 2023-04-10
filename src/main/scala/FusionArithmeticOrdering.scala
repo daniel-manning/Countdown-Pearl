@@ -1,7 +1,10 @@
 import Countdown.{ops, apply}
 import ListUtils.{notEmptySplit, subbags}
+import Op.*
+import Expr.*
 
-object FusionArithmeticOrdering {
+object FusionArithmeticOrdering:
+  type Result = (Expr, Int)
 
   def validDash(op:Op, x:Int, y:Int):Boolean = (op,x,y) match {
     case (Add, _, _) => x <= y
@@ -9,8 +12,6 @@ object FusionArithmeticOrdering {
     case (Mul, _, _) => x != 1 && y != 1 && x <= y
     case (Div, _, _) => y != 1 && x % y == 0
   }
-
-  type Result = (Expr, Int)
 
   def combineFusion(lr:Result, rr:Result):List[Result] = (lr,rr) match {
     case ((le, x), (re, y)) => for{
@@ -42,5 +43,3 @@ object FusionArithmeticOrdering {
     nsDash <- subbags(ns)
     (e, m) <- results(nsDash)
   } yield m).distinct.sorted
-
-}

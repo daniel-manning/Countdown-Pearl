@@ -1,17 +1,18 @@
-import ListUtils._
+import ListUtils.*
+import Op.*
+import Expr.*
 
-sealed trait Op
+enum Op:
+  case Add
+  case Sub
+  case Mul
+  case Div
 
-case object Add extends Op
-case object Sub extends Op
-case object Mul extends Op
-case object Div extends Op
+enum Expr:
+  case Val(x:Int)
+  case App(op:Op, le:Expr, re:Expr)
 
-sealed trait Expr
-case class Val(x:Int) extends Expr
-case class App(op:Op, le:Expr, re:Expr) extends Expr
-
-object Countdown {
+object Countdown:
 
   def valid(op:Op, x:Int, y:Int):Boolean = (op,x,y) match {
     case (Add, _, _) => true
@@ -117,8 +118,3 @@ object Countdown {
       sols.foreach(expr => println(show(expr)))
     }
   }
-}
-
-
-
-

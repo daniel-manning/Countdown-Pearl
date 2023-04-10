@@ -1,4 +1,4 @@
-object ListUtils{
+object ListUtils:
 
   def subSequences[A](xs:List[A]):List[List[A]] = (0 to xs.length).iterator.flatMap(i => xs.combinations(i)).toList
 
@@ -19,6 +19,3 @@ object ListUtils{
   }
 
   def notEmptySplit[A](xs:List[A]):List[(List[A], List[A])] = split(xs).filter(x => notEmpty(x))
-}
-
-
